@@ -190,3 +190,24 @@ class BarZigZag {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+    bzz : BarZigZag = new BarZigZag()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.bzz.draw(context)
+    }
+
+    handleTap(cb  : Function) {
+        this.bzz.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.bzz.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
