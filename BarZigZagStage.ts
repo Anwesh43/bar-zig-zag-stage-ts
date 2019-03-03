@@ -29,6 +29,10 @@ const updateValue : Function = (scale : number, dir : number, a : number, b : nu
     return mirrorValue(scale, a, b) * dir * scGap
 }
 
+const drawRect : Function = (context : CanvasRenderingContext2D, x : number, y : number, w : number, h : number) => {
+    context.fillRect(x, y, w, h)
+    context.strokeRect(x, y, w, h)
+}
 
 const drawBZZNode : Function = (context : CanvasRenderingContext2D, i : number, scale : number) => {
     const gap : number = h / (nodes + 1)
@@ -36,17 +40,18 @@ const drawBZZNode : Function = (context : CanvasRenderingContext2D, i : number, 
     const sc1 : number = divideScale(scale, 0, 2)
     const sc2 : number = divideScale(scale, 1, 2)
     const hGap : number = (2 * size) / (bars + 1)
+    context.fillStyle = foreColor
+    context.strokeStyle = foreColor
     context.save()
     context.translate(w / 2, gap * (i + 1))
     context.rotate(Math.PI/2 * sc2)
-    context.fillStyle = foreColor
     context.translate(0, -size)
-    context.fillRect(-size / 2, hGap, size, hGap)
+    drawRect(context, -size / 2, hGap, size, hGap)
     for (var j = 0; j < bars; j++) {
         const sc : number = divideScale(sc1, j, bars)
         context.save()
         context.translate((2 * size / 3) * (1 - 2 * j) * sc, j * bars * hGap)
-        context.fillRect(-size/ 2, 0, size, hGap)
+        drawRect(context, -size/ 2, 0, size, hGap)
         context.restore()
     }
     context.restore()
