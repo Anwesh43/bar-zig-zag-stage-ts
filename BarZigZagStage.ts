@@ -8,6 +8,7 @@ const scGap : number = 0.05
 const scDiv : number = 0.51
 const foreColor : string = "#673AB7"
 const backColor : string = "#212121"
+const delay : number = 20
 
 const maxScale : Function = (scale : number, i : number, n : number) : number => {
     return Math.max(0, scale - i / n)
@@ -39,13 +40,13 @@ const drawBZZNode : Function = (context : CanvasRenderingContext2D, i : number, 
     context.translate(w / 2, gap * (i + 1))
     context.rotate(Math.PI/2 * sc2)
     context.fillStyle = foreColor
-    context.fillRect(-size, -hGap / 2, 2 * size, hGap)
     context.translate(0, -size)
+    context.fillRect(-size / 2, hGap, size, hGap)
     for (var j = 0; j < bars; j++) {
         const sc : number = divideScale(sc1, j, bars)
         context.save()
-        context.translate(size * (1 - 2 * j) * sc, -hGap + j * 2 * hGap)
-        context.fillRect(0, 0, 2 * size, hGap)
+        context.translate((2 * size / 3) * (1 - 2 * j) * sc, j * bars * hGap)
+        context.fillRect(-size/ 2, 0, size, hGap)
         context.restore()
     }
     context.restore()
